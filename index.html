@@ -618,29 +618,15 @@ header h1 {
             document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"><\/script>');
         }
     </script>
-    <!-- Mermaid - 主要CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" onerror="loadMermaidBackup()"></script>
-    
-    <!-- Mermaid备用加载脚本 -->
-    <script>
-        function loadMermaidBackup() {
-            console.log('主要Mermaid CDN加载失败，尝试备用CDN');
-            var script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.4.3/mermaid.min.js';
-            script.onerror = function() {
-                console.warn('所有Mermaid CDN都加载失败，将使用文本版流程图');
-            };
-            document.head.appendChild(script);
-        }
-        
-        // 检查Mermaid是否加载成功（延迟检查）
-        setTimeout(function() {
-            if (typeof mermaid === 'undefined') {
-                console.log('Mermaid未在预期时间内加载，尝试备用CDN');
-                loadMermaidBackup();
-            }
-        }, 2000);
-    </script>
+   <!-- Mermaid.js for rendering the flowchart -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  // 自动扫描并渲染 <div class="mermaid"> ... </div>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: "default"  // 需要可改 'neutral' | 'dark' 等
+  });
+</script>
 </head>
 <body>
     <!-- 浏览器兼容性警告 -->
@@ -1384,35 +1370,35 @@ function generateFlowChart(chartContainer, comprehensiveScore) {
         });
         
         // 生成与原始模板一致的Mermaid流程图代码，时间作为独立单元框
-        var mermaidCode = `
-            graph TD
-                A["📊 当前状态<br/>综合得分: ${comprehensiveScore.toFixed(1)}"] --> B{"🔍 能力诊断"}
-                B --> C["📚 基础认知强化<br/>记忆、注意、感知"]
-                B --> D["🧠 综合理解提升<br/>信息整合、分析推理"]
-                B --> E["🚀 高阶应用发展<br/>创新思维、问题解决"]
-                
-                C --> F["⏱️ 基础训练阶段<br/>${timePhase1}"]
-                D --> G["🔄 能力整合阶段<br/>${timePhase2}"]
-                E --> H["⭐ 高阶发展阶段<br/>${timePhase3}"]
-                
-                F --> I["💪 进阶提升"]
-                G --> I
-                H --> I
-                
-                I --> J["🎯 成功上岸"]
-                
-                style A fill:#e1f5fe,stroke:#2196F3,stroke-width:2px
-                style B fill:#fff3e0,stroke:#FF9800,stroke-width:2px
-                style C fill:#fff3e0,stroke:#FF9800,stroke-width:2px
-                style D fill:#f3e5f5,stroke:#9C27B0,stroke-width:2px
-                style E fill:#fce4ec,stroke:#E91E63,stroke-width:2px
-                style F fill:#ffecb3,stroke:#FFC107,stroke-width:2px
-                style G fill:#f1f8e9,stroke:#8BC34A,stroke-width:2px
-                style H fill:#fde7f3,stroke:#FF4081,stroke-width:2px
-                style I fill:#e8f5e8,stroke:#4CAF50,stroke-width:2px
-                style J fill:#c8e6c9,stroke:#4CAF50,stroke-width:3px
-        `;
-        
+       <!-- ✅ 正确版本：Mermaid 会把它渲染成流程图 -->
+<div class="mermaid">
+%% 认知能力进化路径
+graph TD
+  A["📊 当前状态"] --> B["🔍 能力诊断"]
+  B --> C["📚 基础认知强化"]
+  B --> D["🧠 综合理解提升"]
+  B --> E["🚀 高阶应用发展"]
+
+  C --> F["🧩 基础训练阶段（1-2个月）"]
+  D --> G["🌀 能力整合阶段（2-4个月）"]
+  E --> H["⭐ 高阶发展阶段（4-6个月）"]
+
+  F --> I["💪 进阶提升"]
+  G --> H
+  H --> I
+  I --> J["🏁 成功上岸"]
+
+  style A fill:#e1f5fe,stroke:#2196F3,stroke-width:2px
+  style B fill:#fff3e0,stroke:#FF9800,stroke-width:2px
+  style C fill:#fff3e0,stroke:#FF9800,stroke-width:2px
+  style D fill:#f3e5f5,stroke:#9C27B0,stroke-width:2px
+  style E fill:#fce4ec,stroke:#E91E63,stroke-width:2px
+  style F fill:#ffecb3,stroke:#FFC107,stroke-width:2px
+  style G fill:#f1f8e9,stroke:#8BC34A,stroke-width:2px
+  style H fill:#dfe7f3,stroke:#FF4081,stroke-width:2px
+  style I fill:#e8f5e9,stroke:#4CAF50,stroke-width:2px
+  style J fill:#c8e6c9,stroke:#4CAF50,stroke-width:3px
+</div>
         // 创建唯一ID
         var chartId = 'mermaid-chart-' + Date.now();
         chartContainer.innerHTML = '<div id="' + chartId + '" class="mermaid">' + mermaidCode + '</div>';
