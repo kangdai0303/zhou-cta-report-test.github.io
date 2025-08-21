@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>测试页面</title>
+</head>
+<body>
+    <script>
+        // 简单测试JavaScript语法
+        console.log('JavaScript测试开始');
+        
+        // 测试基本变量声明
+        var test1 = 'var test';
+        console.log('变量测试:', test1);
+        
+        // 测试函数
+        function testFunction() {
+            return '函数测试成功';
+        }
+        console.log('函数测试:', testFunction());
+        
+        // 测试数组操作
+        var testArray = [1, 2, 3];
+        for (var i = 0; i < testArray.length; i++) {
+            console.log('数组元素:', testArray[i]);
+        }
+        
+        // 测试字符串拼接
+        var name = 'World';
+        var greeting = 'Hello ' + name + '!';
+        console.log('字符串拼接:', greeting);
+        
+        console.log('所有测试完成，语法正常');
+        
+        // 测试DOM操作
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.innerHTML += '<p>DOM操作测试成功</p>';
+        });
+    </script>
+</body>
+</html>
